@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom PregVett Colors */
+:root {
+  --primary: #7AC2D5;
+  --secondary: #BEE7C4;
+  --accent1: #F4A497;
+  --accent2: #F5F5F5;
+  --text-primary: #2C3E50;
+  --text-muted: #888888;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --success: #27ae60;
+}
+
+/* Custom Components */
+.btn-primary {
+  @apply bg-[#7AC2D5] hover:bg-[#6ab0c3] text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-[#BEE7C4] hover:bg-[#aed6b4] text-[#2C3E50] font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+}
+
+.btn-accent {
+  @apply bg-[#F4A497] hover:bg-[#e29487] text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7AC2D5] focus:border-transparent outline-none transition-all duration-200;
+}
+
+.progress-bar {
+  @apply bg-[#7AC2D5] rounded-full transition-all duration-300;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Mobile-first responsive */
+@media (max-width: 640px) {
+  .card {
+    @apply p-4;
+  }
+  
+  .btn-primary, .btn-secondary, .btn-accent {
+    @apply py-2 px-4 text-sm;
+  }
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply bg-gray-200 rounded animate-pulse;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-[#7AC2D5] rounded;
+}
