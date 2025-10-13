@@ -1,13 +1,13 @@
 const express = require('express');
-const { register, login, getMe, updateProfile, completeOnboarding } = require('../controllers/authController');
-const { auth } = require('../middleware/auth');
+const { register, login, getMe, updateProfile, completeOnboarding } = require('../controllers/authController.js');
+const { auth } = require('../middleware/auth.js');
 
-const router = express.Router();
+const Mirouter = express.Router();
 
-router.post('/register', register);
-router.post('/login', login);
-router.get('/me', auth, getMe);
-router.put('/profile', auth, updateProfile);
-router.put('/complete-onboarding', auth, completeOnboarding);
+Mirouter.post('/register', register);
+Mirouter.post('/login', login);
+Mirouter.get('/me', auth, getMe);
+Mirouter.put('/profile', auth, updateProfile);
+Mirouter.put('/complete-onboarding', auth, completeOnboarding);
 
-module.exports = router;
+module.exports = Mirouter;

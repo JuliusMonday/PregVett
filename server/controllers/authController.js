@@ -1,6 +1,7 @@
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/User.js');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -15,7 +16,7 @@ const register = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'User already exists!!!' });
     }
 
     // Hash password
@@ -53,7 +54,6 @@ const register = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -80,6 +80,7 @@ const login = async (req, res) => {
     res.json({
       success: true,
       token,
+      message: 'Login successful',
       user: {
         id: user._id,
         name: user.name,
