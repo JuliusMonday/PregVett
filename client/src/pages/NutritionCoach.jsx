@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+import { API_BASE_URL } from '../api/config';
 const NutritionCoach = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -31,7 +31,7 @@ const NutritionCoach = () => {
 
   const fetchFoods = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/foods', {
+      const response = await fetch(`${API_BASE_URL}/api/foods`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -50,7 +50,7 @@ const NutritionCoach = () => {
 
   const fetchRecommendations = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/foods/recommendations', {
+      const response = await fetch(`${API_BASE_URL}/api/foods/recommendations`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
+import { API_BASE_URL } from '../api/config';
 const Onboarding = () => {
     const { updateUser, completeOnboarding } = useAuth();
     const navigate = useNavigate();
@@ -103,7 +103,7 @@ const Onboarding = () => {
             await updateUser(profileData);
 
             const pregnancyData = { lmp: formData.lmp, dueDate: formData.dueDate, currentWeek: 1, status: 'active', riskLevel: 'low' };
-            const response = await fetch('http://localhost:5001/api/pregnancies', {
+            const response = await fetch(`${API_BASE_URL}/api/pregnancies`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(pregnancyData)

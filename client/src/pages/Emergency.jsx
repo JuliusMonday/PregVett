@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+import { API_BASE_URL } from '../api/config';
 const Emergency = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('emergency');
@@ -41,7 +41,7 @@ const Emergency = () => {
 
   const fetchNearbyFacilities = async (location = null) => {
     try {
-      let url = 'http://localhost:5001/api/emergency/facilities';
+      let url = `${API_BASE_URL}/api/emergency/facilities`;
       if (location) {
         url += `?latitude=${location.latitude}&longitude=${location.longitude}`;
       }
@@ -65,7 +65,7 @@ const Emergency = () => {
 
   const fetchEmergencyContacts = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/emergency/contacts', {
+      const response = await fetch(`${API_BASE_URL}/api/emergency/contacts`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -82,7 +82,7 @@ const Emergency = () => {
 
   const fetchGuidelines = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/emergency/guidelines', {
+      const response = await fetch(`${API_BASE_URL}/api/emergency/guidelines`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -106,7 +106,7 @@ const Emergency = () => {
         severity: 'high'
       };
 
-      const response = await fetch('http://localhost:5001/api/emergency/alert', {
+      const response = await fetch(`${API_BASE_URL}/api/emergency/alert`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

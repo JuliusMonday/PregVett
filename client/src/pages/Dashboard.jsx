@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
+import { API_BASE_URL } from '../api/config';
 const Dashboard = () => {
     const { user } = useAuth();
     const [pregnancyStats, setPregnancyStats] = useState(null);
@@ -21,7 +21,7 @@ const Dashboard = () => {
     const fetchPregnancyStats = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/pregnancies/stats', { // Fixed port to 5001
+            const response = await fetch(`${API_BASE_URL}/api/pregnancies/stats`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ const Dashboard = () => {
     };
 
     const fetchTodayMeal = async () => {
-        // Mock data - replace with actual API: fetch('http://localhost:5001/api/nutrition/today-meal', { headers: { Authorization: `Bearer ${token}` } })
+        fetch(`${API_BASE_URL}/api/nutrition/today-meal`, { headers: { Authorization: `Bearer ${token}` } })
         setTodayMeal({
             name: 'Jollof Rice with Vegetables',
             description: 'Rich in carbohydrates and vitamins',
@@ -54,9 +54,9 @@ const Dashboard = () => {
             folate: '85mcg'
         });
     };
-
+      // Mock data - replace with actual API: 
     const fetchUpcomingAppointments = async () => {
-        // Mock data - replace with actual API: fetch('http://localhost:5001/api/appointments/upcoming', { headers: { Authorization: `Bearer ${token}` } })
+  fetch(`${API_BASE_URL}/api/appointments/upcoming`, { headers: { Authorization: `Bearer ${token}` } })
         setUpcomingAppointments([
             {
                 id: 1,
@@ -78,7 +78,7 @@ const Dashboard = () => {
     };
 
     const fetchNutritionScore = async () => {
-        // Mock data - replace with actual API: fetch('http://localhost:5001/api/nutrition/score', { headers: { Authorization: `Bearer ${token}` } })
+        fetch(`${API_BASE_URL}/api/nutrition/score`, { headers: { Authorization: `Bearer ${token}` } })
         setNutritionScore(85);
     };
 
