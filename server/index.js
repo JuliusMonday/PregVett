@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173", // Vite default port
-    "https://pregvett.onrender.com" // Render frontend URL
+    "https://pregvett-frontend.onrender.com" // Render frontend URL
   ],
   credentials: true
 }));
