@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, [user]);
 
+    // 🧩 Register function
     const register = async (registrationData) => {
         try {
             const response = await fetch('http://localhost:5001/api/register', {
@@ -56,6 +58,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // 🧩 Login function
     const login = async (email, password) => {
         try {
             const response = await fetch('http://localhost:5001/api/login', {
@@ -86,21 +89,44 @@ export const AuthProvider = ({ children }) => {
             return { success: false, message: 'Network error' };
         }
     };
+
+    // ✅ FIX 1: Make sure updateUser is accessible everywhere
     const updateUser = (updatedData) => {
         setUser((prev) => {
             const newUser = { ...prev, ...updatedData };
-            localStorage.setItem("user", JSON.stringify(newUser));
+            localStorage.setItem('user', JSON.stringify(newUser));
             return newUser;
+        });
+    };
+
+    // ✅ FIX 2: Add completeOnboarding function (used in Onboarding.jsx)
+    const completeOnboarding = () => {
+        setUser((prev) => {
+            const updated = { ...prev, onboardingCompleted: true };
+            localStorage.setItem('user', JSON.stringify(updated));
+            return updated;
         });
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
     };
 
+    // ✅ FIX 3: Export all required functions
     return (
-        <AuthContext.Provider value={{ user, loading, register, login, logout }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                loading,
+                register,
+                login,
+                logout,
+                updateUser,
+                completeOnboarding,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

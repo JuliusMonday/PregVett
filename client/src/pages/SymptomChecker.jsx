@@ -39,7 +39,7 @@ const SymptomChecker = () => {
 
   const fetchSymptoms = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/symptoms', {
+      const response = await fetch('http://localhost:5001/api/symptoms', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -58,7 +58,7 @@ const SymptomChecker = () => {
 
   const fetchSymptomStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/symptoms/stats', {
+      const response = await fetch('http://localhost:5001/api/symptoms/stats', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -103,7 +103,7 @@ const SymptomChecker = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/api/symptoms', {
+      const response = await fetch('http://localhost:5001/api/symptoms', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

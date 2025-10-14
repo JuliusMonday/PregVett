@@ -31,7 +31,7 @@ const NutritionCoach = () => {
 
   const fetchFoods = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/foods', {
+      const response = await fetch('http://localhost:5001/api/foods', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -50,7 +50,7 @@ const NutritionCoach = () => {
 
   const fetchRecommendations = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/foods/recommendations', {
+      const response = await fetch('http://localhost:5001/api/foods/recommendations', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

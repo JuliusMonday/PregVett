@@ -26,26 +26,26 @@ connectDB();
 
 // Routes
 app.use('/api', require('./routes/auth'));
-// app.use('/api/users', require('./routes/users'));
-// app.use('/api/pregnancies', require('./routes/pregnancies'));
-// app.use('/api/foods', require('./routes/foods'));
-// app.use('/api/symptoms', require('./routes/symptoms'));
-// app.use('/api/appointments', require('./routes/appointments'));
-// app.use('/api/emergency', require('./routes/emergency'));
-// app.use('/api/community', require('./routes/community'));
-// app.use('/api/education', require('./routes/education'));
-// app.use('/api/health', require('./routes/health'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/pregnancies', require('./routes/pregnancies'));
+app.use('/api/foods', require('./routes/foods'));
+app.use('/api/symptoms', require('./routes/symptoms'));
+app.use('/api/appointments', require('./routes/appointments'));
+app.use('/api/emergency', require('./routes/emergency'));
+app.use('/api/community', require('./routes/community'));
+app.use('/api/education', require('./routes/education'));
+app.use('/api/health', require('./routes/health'));
 
 // Health check endpoint
-// app.get('/api/health', (req, res) => {
-//   res.json({ status: 'OK', message: 'PregVett API is running' });
-// });
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'PregVett API is running' });
+});
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).json({ message: 'Something went wrong!' });
+// });
 // app.get("/check", (req, res) => {
 //   res.status(200).send("server working")
 // })

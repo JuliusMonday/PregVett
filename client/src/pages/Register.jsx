@@ -12,7 +12,7 @@ const Register = () => {
         password: '',
         confirmPassword: '',
         phone: '',
-        role: 'user',
+        role: '',
     });
 
     const [loading, setLoading] = useState(false);
