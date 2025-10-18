@@ -13,7 +13,7 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    "http://localhost:5173", // Vite default port
+    "http://localhost:3000", // Local frontend URL
     "https://pregvett-frontend.onrender.com" // Render frontend URL
   ],
   credentials: true

@@ -16,7 +16,7 @@ const Login = () => {
     // Auto-redirect if already logged in
     useEffect(() => {
         if (user) {
-            if (!user.onboardingComplete) {
+            if (!user.onboardingCompleted) {
                 navigate('/onboarding');
             } else {
                 navigate(redirectUrl);

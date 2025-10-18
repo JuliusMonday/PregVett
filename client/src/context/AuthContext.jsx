@@ -1,7 +1,7 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { registerUser, loginUser } from "../api/auth";
-
+import { completeOnboardingAPI } from "../api/auth";
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
@@ -52,24 +52,33 @@ export const AuthProvider = ({ children }) => {
 
   // 🧠 Login function
   const login = async (email, password) => {
-    const { ok, data } = await loginUser(email, password);
-    if (ok) {
-      const loggedInUser = {
-        id: data.user.id,
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone,
-        role: data.user.role,
-        onboardingCompleted: data.user.onboardingCompleted,
-        token: data.token,
-      };
-      setUser(loggedInUser);
-      localStorage.setItem("token", data.token);
-      return { success: true };
-    } else {
-      return { success: false, message: data.message || "Login failed" };
-    }
-  };
+  const { ok, data } = await loginUser(email, password);
+  if (ok) {
+    // Get existing onboarding status from localStorage if backend doesn't provide it
+    const existingUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const backendOnboardingStatus = data.user.onboardingCompleted;
+    const finalOnboardingStatus = 
+      backendOnboardingStatus !== undefined 
+        ? backendOnboardingStatus 
+        : existingUser.onboardingCompleted || false;
+
+    const loggedInUser = {
+      id: data.user.id,
+      name: data.user.name,
+      email: data.user.email,
+      phone: data.user.phone,
+      role: data.user.role,
+      onboardingCompleted: finalOnboardingStatus, // ← Preserve if backend omits it
+      token: data.token,
+    };
+
+    setUser(loggedInUser);
+    localStorage.setItem("token", data.token);
+    return { success: true };
+  } else {
+    return { success: false, message: data.message || "Login failed" };
+  }
+};
 
   // ✅ Update user info
   const updateUser = (updatedData) => {
@@ -80,15 +89,26 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // ✅ Complete onboarding
-  const completeOnboarding = () => {
-    setUser((prev) => {
-      const updated = { ...prev, onboardingCompleted: true };
-      localStorage.setItem("user", JSON.stringify(updated));
-      return updated;
-    });
-  };
+// Inside AuthProvider
+const completeOnboarding = async () => {
+  // ❌ Don't read from localStorage here
+  // const token = localStorage.getItem("token");
 
+  // ✅ Use token from current user in context
+  if (!user || !user.token) {
+    logout();
+    return { success: false, message: "Not authenticated" };
+  }
+
+  const { ok, data } = await completeOnboardingAPI(user.token); // pass token
+  if (ok) {
+    setUser(prev => ({ ...prev, onboardingCompleted: true }));
+    // No need to save token again — it's already there
+    return { success: true };
+  } else {
+    return { success: false, message: data.message || "Onboarding failed" };
+  }
+};
   // ✅ Logout
   const logout = () => {
     setUser(null);

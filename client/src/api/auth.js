@@ -30,3 +30,20 @@ export const loginUser = async (email, password) => {
     return { ok: false, data: { message: "Network error" } };
   }
 };
+
+// src/api/auth.js
+export const completeOnboardingAPI = async (token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/onboarding`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // ← uses passed token
+    }
+  });
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    return { ok: false, data: { message: error.message } };
+  }
+};

@@ -109,15 +109,16 @@ const Onboarding = () => {
                 body: JSON.stringify(pregnancyData)
             });
 
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Failed to create pregnancy record');
+          const result = await completeOnboarding();
+    if (!result.success) {
+      throw new Error(result.message || 'Onboarding completion failed');
+    }
 
-            await completeOnboarding();
-            navigate('/dashboard');
-        } catch (error) {
-            console.error(error);
-            alert(`Failed to complete onboarding. ${error.message}`);
-        }
+    navigate('/dashboard');
+  } catch (error) {
+    console.error(error);
+    alert(`Failed to complete onboarding. ${error.message}`);
+  }
     };
 
     // Render steps

@@ -25,32 +25,22 @@ const updateUserProfile = async (req, res) => {
 };
 
 const completeOnboarding = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { 
-        $set: { 
-          onboardingCompleted: true,
-          updatedAt: Date.now()
-        }
-      },
-      { new: true }
-    ).select('-password');
+  console.log("Completing onboarding for user ID:", req.user.id);
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { $set: { onboardingCompleted: true, updatedAt: Date.now() } },
+    { new: true }
+  ).select('-password');
 
-    res.json({
-      success: true,
-      user
-    });
-  } catch (error) {
-    console.error('Complete onboarding error:', error);
-    res.status(500).json({ message: 'Server error' });
+  console.log("Updated user:", user); // ← Is this null?
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
   }
-};
 
+  res.json({ success: true, user });
+};
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
