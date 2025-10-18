@@ -4,28 +4,28 @@ import { Link } from 'react-router-dom';
 const About = () => {
   const team = [
     {
-      name: 'Dr. Aisha Bello',
+      name: 'Dr. Amaka O.',
       role: 'Founder & CEO',
       bio: 'Obstetrician with 15+ years experience in maternal health',
-      avatar: 'AB'
+      avatar: 'DA'
     },
     {
-      name: 'Engr. Tunde Adekunle',
-      role: 'CTO',
+      name: 'Monday Chimaobi Julius',
+      role: 'Software Developer',
       bio: 'Software engineer passionate about healthcare technology',
       avatar: 'TA'
     },
     {
-      name: 'Ngozi Okafor',
-      role: 'Head of Operations',
-      bio: 'Public health expert specializing in maternal care',
+      name: 'Eleanya Chukwuemeka K.',
+      role: 'Data Analyst',
+      bio: 'Maternal health data insights driving evidence-based features.',
       avatar: 'NO'
     },
     {
-      name: 'Dr. Fatima Ibrahim',
-      role: 'Medical Director',
-      bio: 'Gynecologist with expertise in high-risk pregnancies',
-      avatar: 'FI'
+      name: 'Mrs Christiana Chiamaka',
+      role: 'Quality Assurance',
+      bio: 'Focus is ensuring every user interaction is smooth, safe and error - free.',
+      avatar: 'CC'
     }
   ];
 
