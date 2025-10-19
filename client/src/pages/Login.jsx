@@ -10,14 +10,28 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Get redirect URL from query parameters (default to dashboard)
     const redirectUrl = new URLSearchParams(location.search).get('redirect') || '/dashboard';
 
-    // Auto-redirect if already logged in
+    // Handle post-login redirect based on role AND onboarding status
     useEffect(() => {
         if (user) {
             if (!user.onboardingCompleted) {
-                navigate('/onboarding');
+                // Redirect to role-specific onboarding
+                switch (user.role) {
+                    case 'doctor':
+                        navigate('/onboarding-doctor');
+                        break;
+                    case 'midwife':
+                        navigate('/onboarding-midwife'); // or '/onboarding-doctor' if shared
+                        break;
+                    case 'admin':
+                        // Admins skip onboarding — mark as complete or go to dashboard
+                        navigate('/dashboard');
+                        break;
+                    case 'user':
+                    default:
+                        navigate('/onboarding');
+                }
             } else {
                 navigate(redirectUrl);
             }
@@ -35,11 +49,10 @@ const Login = () => {
 
         const result = await login(formData.email, formData.password);
 
-        if (result.success) {
-            // Redirect will be handled automatically by useEffect
-        } else {
+        if (!result.success) {
             setError(result.message);
         }
+        // If successful, useEffect will handle redirect
 
         setLoading(false);
     };
@@ -105,7 +118,11 @@ const Login = () => {
                             disabled={loading}
                             className="btn-primary w-full flex items-center justify-center"
                         >
-                            {loading ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : 'Sign In'}
+                            {loading ? (
+                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            ) : (
+                                'Sign In'
+                            )}
                         </button>
                     </form>
 

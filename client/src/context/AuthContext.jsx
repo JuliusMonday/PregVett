@@ -91,8 +91,6 @@ export const AuthProvider = ({ children }) => {
 
 // Inside AuthProvider
 const completeOnboarding = async () => {
-  // ❌ Don't read from localStorage here
-  // const token = localStorage.getItem("token");
 
   // ✅ Use token from current user in context
   if (!user || !user.token) {
@@ -103,7 +101,7 @@ const completeOnboarding = async () => {
   const { ok, data } = await completeOnboardingAPI(user.token); // pass token
   if (ok) {
     setUser(prev => ({ ...prev, onboardingCompleted: true }));
-    // No need to save token again — it's already there
+  
     return { success: true };
   } else {
     return { success: false, message: data.message || "Onboarding failed" };

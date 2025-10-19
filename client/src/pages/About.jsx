@@ -18,13 +18,13 @@ const About = () => {
     {
       name: 'Eleanya Chukwuemeka K.',
       role: 'Data Analyst',
-      bio: 'Maternal health data insights driving evidence-based features.',
-      avatar: 'NO'
+      bio: 'Maternal health data insights driving evidence-based features',
+      avatar: 'EC'
     },
     {
       name: 'Mrs Christiana Chiamaka',
       role: 'Quality Assurance',
-      bio: 'Focus is ensuring every user interaction is smooth, safe and error - free.',
+      bio: 'Focus in quality assurance and data analysis',
       avatar: 'CC'
     }
   ];

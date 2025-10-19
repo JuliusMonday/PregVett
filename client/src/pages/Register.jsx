@@ -22,31 +22,46 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
 
-        if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-
-        setLoading(true);
-        const { confirmPassword, ...registrationData } = formData;
-        const result = await register(registrationData);
-
-        setLoading(false);
-        if (result.success) {
-            navigate('/onboarding');
-        } else {
-            setError(result.message);
-        }
-    };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+  setLoading(true);
+  const { confirmPassword, ...registrationData } = formData;
+  const result = await register(registrationData);
+  setLoading(false);
+  if (result.success) {
+    // Redirect based on role
+    switch (formData.role) {
+      case 'user':
+        navigate('/onboarding');
+        break;
+      case 'doctor':
+        navigate('/onboarding-doctor');
+        break;
+      case 'midwife':
+        navigate('/onboarding-doctor'); // Create this later
+        break;
+      case 'admin':
+        // Admins skip onboarding - ensure backend sets onboardingCompleted: true
+        navigate('/dashboard');
+        break;
+      default:
+        navigate('/dashboard');
+    }
+  } else {
+    setError(result.message);
+  }
+};
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#7AC2D5] to-[#BEE7C4] p-4">
             <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-center mb-4">Join PregVett</h2>
+                <h2 className="text-3xl font-bold text-center mb-4 text-[#7AC2D5]">Join PregVett</h2>
                 {error && <p className="text-red-600 mb-4">{error}</p>}
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <input
@@ -73,7 +88,8 @@ const Register = () => {
                     />
                     <select name="role" value={formData.role} onChange={handleChange} className="input-field w-full">
                         <option value="user">Pregnant Mother</option>
-                        <option value="doctor">Healthcare Provider</option>
+                        <option value="doctor">Healthcare Provider (Doctor)</option>
+                        <option value="midwife">Midwife</option>
                         <option value="admin">Administrator</option>
                     </select>
                     <input

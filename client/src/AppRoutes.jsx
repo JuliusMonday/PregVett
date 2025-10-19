@@ -24,7 +24,7 @@ import Education from './pages/Education.jsx';
 import HealthTracking from './pages/HealthTracking.jsx';
 import DoctorDashboard from './pages/DoctorDashboard.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
-
+import DoctorOnboarding from './pages/DoctorOnboarding.jsx';
 const AppRoutes = () => {
     return (
         <Routes>
@@ -45,6 +45,7 @@ const AppRoutes = () => {
             <Route element={<ProtectedRoute />}>
                 <Route element={<Layout />}>
                     <Route path="/onboarding" element={<Onboarding />} />
+                    <Route path="/onboarding-doctor" element={<DoctorOnboarding />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/nutrition" element={<NutritionCoach />} />
                     <Route path="/birth-defect-prevention" element={<BirthDefectPrevention />} />

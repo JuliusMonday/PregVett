@@ -1,11 +1,12 @@
 // src/components/Onboarding.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../api/config';
 const Onboarding = () => {
     const { updateUser, completeOnboarding } = useAuth();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -20,7 +21,14 @@ const Onboarding = () => {
         notifications: true,
         consent: false,
     });
-
+    // In Onboarding.jsx
+    
+useEffect(() => {
+  if (user && user.role !== 'user') {
+    // Non-pregnant users shouldn't be here
+    navigate('/dashboard');
+  }
+}, [user, navigate]);
     const steps = [
         { id: 1, title: 'Pregnancy Setup', icon: 'fas fa-baby' },
         { id: 2, title: 'Health Profile', icon: 'fas fa-user-md' },
